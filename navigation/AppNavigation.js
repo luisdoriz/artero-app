@@ -9,10 +9,33 @@ import Home from '../screens/Home';
 import AddPatient from '../screens/AddPatient';
 import Patients from '../screens/Patients';
 import Patient from '../screens/Patient';
+import SelectPatient from '../screens/SelectPatient';
+import Register from '../screens/Register';
 
 const HomeNavigation = createStackNavigator({
 	Home: Home,
 	AddPatient: AddPatient,
+});
+
+const RegisterNavigation = createStackNavigator({
+	Patients: {
+		screen: SelectPatient,
+		navigationOptions: () => ({
+			title: 'Seleccion de paciente',
+			headerTitleStyle: {
+				width: WIDTH - 75,
+			},
+		}),
+	},
+	Register: {
+		screen: Register,
+		navigationOptions: () => ({
+			title: 'Registro de presion',
+			headerTitleStyle: {
+				width: WIDTH - 75,
+			},
+		}),
+	}
 });
 
 const PatientsNavigation = createStackNavigator({
@@ -20,7 +43,7 @@ const PatientsNavigation = createStackNavigator({
 	Patient: {
 		screen: Patient,
 		navigationOptions: ({ navigation }) => ({
-			title: navigation.state.params.patient.name,
+			title: navigation.state.params.handleName,
 			headerTitleStyle: {
 				width: WIDTH - 75,
 			},
@@ -30,7 +53,7 @@ const PatientsNavigation = createStackNavigator({
 
 const AppNavigation = createBottomTabNavigator({
 	Home: HomeNavigation,
-	Register: Patients,
+	Register: RegisterNavigation,
 	Patients: PatientsNavigation,
 });
 

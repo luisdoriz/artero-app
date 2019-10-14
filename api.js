@@ -33,6 +33,19 @@ const putHeader = {
 
 const api = {
   host,
+  appointment: {
+    post(token, data) {
+      const url = `${host}/appointment`;
+      postHeader.body = JSON.stringify(data);
+      postHeader.headers.authorization = token;
+      return fetch(url, postHeader);
+    },
+    get(token, id) {
+      const url = `${host}/appointment/${id}`;
+      getHeader.headers.authorization = token;
+      return fetch(url, getHeader);
+    },
+  },
   patients: {
     get(token) {
       const url = `${host}/patients`;
@@ -45,7 +58,7 @@ const api = {
       return fetch(url, getHeader);
     },
     post(token, data) {
-      const url = `${host}/patients`;
+      const url = `${host}/profile/newPatient`;
       postHeader.body = JSON.stringify(data);
       postHeader.headers.authorization = token;
       return fetch(url, postHeader);
