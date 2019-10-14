@@ -5,10 +5,13 @@ import user from '../../icons/user.png';
 import TouchableSquare from '../../components/core/TouchableSquare';
 
 class HomeView extends Component {
+    
     render() {
+        const { navigation } = this.props;
+
         return (
             <View style={styles.contianer}>
-                <TouchableSquare text="Agregar Paciente" img={user} onPress={() => navigation.navigate('RegisterPatient')} />
+                <TouchableSquare text="Agregar Paciente" img={user} onPress={() => navigation.navigate('AddPatient')} />
             </View>
         )
     }

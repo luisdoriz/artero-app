@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, FlatList, TextInput } from 'react-native';
+
+import { fetchPatients, searchPatient } from '../../data/patients';
+import TouchableSquare from '../../components/core/TouchableSquare';
+import user from '../../icons/user.png';
 
 const initialState = {
 	patients: [],
 	registerPatients: false,
+	filter: undefined,
+	loading: true,
 };
 
 class PatientsView extends Component {
@@ -12,36 +18,82 @@ class PatientsView extends Component {
 		this.state = initialState;
 	}
 
-	// componentDidMount() {
-	// 	this.getPatients();
-	// }
+	componentDidMount() {
+		this.getPatients();
+	}
 
-	// getPatients = async () => {
-	// 	const { response } = await fetchPatients('token');
-	// 	if (response) {
-	// 		this.setState({ patients: response });
-	// 	} else {
-	// 		this.setState({ registerPatients: true })
-	// 	}
-	// }
+	getPatients = async () => {
+		const response = await fetchPatients('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcxMDI4MzQzfQ.mnNI2rW_jRx4vqpPrcvsjZKuUZqgC4rr7HdGGDKCnCI');
+		if (response) {
+			console.log(response)
+			this.setState({ patients: response, loading: false });
+		} else {
+			this.setState({ registerPatients: true, loading: false })
+		}
+	}
+
+	searchPatientByName = async (text) => {
+		this.setState({ filter: text, });
+		if (text.length === 0) {
+			this.getPatients()
+		} else {
+			const response = await searchPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcxMDI4MzQzfQ.mnNI2rW_jRx4vqpPrcvsjZKuUZqgC4rr7HdGGDKCnCI', text);
+			if (response) {
+				this.setState({ patients: response, loading: false });
+			} else {
+				this.setState({ loading: false });
+			}
+		}
+	}
 
 	render() {
-		const { patients, registerPatients } = this.state;
+		const { patients, registerPatients, filter, loading } = this.state;
+		const { navigation } = this.props;
 		if (registerPatients) {
 			return (
 				<View style={styles.container}>
+					<TextInput
+						style={{ height: 40 }}
+						placeholder="Nombre del paciente!"
+						onChangeText={(text) => this.searchPatientByName(text)}
+						value={filter}
+					/>
 					<Text> No tiene pacientes registrados </Text>
 				</View>
 			)
-		} else if (patients.length === 0) {
+		} else if (loading) {
 			return (
 				<View style={[styles.container, styles.horizontal]}>
 					<ActivityIndicator size="large" color="#0000ff" />
 				</View>)
 		}
+		console.log(patients.size);
 		return (
 			<View style={styles.container}>
-				<Text> Patients list </Text>
+				<TextInput
+					style={{ height: 40 }}
+					placeholder="Nombre del paciente!"
+					onChangeText={(text) => this.searchPatientByName(text)}
+					value={filter}
+				/>
+				{patients.size !== 0 && <FlatList
+					data={patients}
+					renderItem={({ item }) =>
+						<TouchableSquare
+							text={item.patient.handleName}
+							img={user}
+							onPress={() =>
+								navigation.navigate(
+									'Patient',
+									{
+										patient: item.patient.handleName,
+										id: item.patient._id
+									}
+								)}
+						/>
+					}
+					keyExtractor={(item) => item._id}
+				/>}
 			</View>
 		)
 	}
