@@ -1,7 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
 import { Dimensions } from 'react-native';
 const WIDTH = Dimensions.get('window').width;
 
@@ -51,10 +52,15 @@ const PatientsNavigation = createStackNavigator({
 	},
 });
 
-const AppNavigation = createBottomTabNavigator({
+const AppNavigation = createMaterialBottomTabNavigator({
 	Home: HomeNavigation,
 	Register: RegisterNavigation,
 	Patients: PatientsNavigation,
-});
+},
+	{
+		activeColor: '#f0edf6',
+		inactiveColor: '#3e2465',
+		barStyle: { backgroundColor: '#694fad' },
+	});
 
 export default createAppContainer(AppNavigation);

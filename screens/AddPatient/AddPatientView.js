@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Picker, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid } from 'react-native'
+import { Text, View, Picker, TextInput, CheckBox, StyleSheet, TouchableHighlight, Alert, ToastAndroid, ScrollView } from 'react-native'
 import DatePicker from 'react-native-datepicker';
 import { addPatient } from '../../data/patients';
 
@@ -11,11 +11,26 @@ const initialState = {
   height: undefined,
   sex: 0,
   loading: false,
+  smoke: false,
+  bronchitis: false,
+  hearthDisease: false,
+  renalDisease: false,
+  prostaticHyperplasia: false,
+  pregnancy: false,
+  hyperthyroidism: false,
+  cough: false,
+  venousInsufficiency: false,
+  cardioInsufficiency: false,
+  migraine: false,
+  goutDisease: false,
+  anxiety: false,
+  cocaineAddiction: false,
+  depression: false,
+  diabetes: 0,
 }
 class AddPatientView extends Component {
   constructor(props) {
-    super(props)
-
+    super(props);
     this.state = initialState;
   }
 
@@ -29,46 +44,87 @@ class AddPatientView extends Component {
       email,
       height,
       sex,
+      smoke,
+      bronchitis,
+      hearthDisease,
+      renalDisease,
+      prostaticHyperplasia,
+      pregnancy,
+      hyperthyroidism,
+      cough,
+      venousInsufficiency,
+      cardioInsufficiency,
+      migraine,
+      goutDisease,
+      anxiety,
+      cocaineAddiction,
+      depression,
+      diabetes,
       loading,
     } = this.state;
-    this.setState({loading: true});
+    this.setState({ loading: true });
     if (name === undefined || wheight === undefined || height === undefined || email === undefined || birthday === undefined) {
       Alert.alert(
         'Error',
         'Debe de completar todos los campos',
         [
-          {text: 'Entendido'},
+          { text: 'Entendido' },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     } else {
 
-    const data = {
-      name,
-      wheight,
-      birthday,
-      email,
-      height,
-      sex,
-    };
-    
-    const response = await addPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcxMDI4MzQzfQ.mnNI2rW_jRx4vqpPrcvsjZKuUZqgC4rr7HdGGDKCnCI', data);
-    if (response.doctorProfile !== undefined) {
-      ToastAndroid.show('Se agregon exito el paciente', ToastAndroid.SHORT);
-      navigation.goBack();
-    } else {
-      Alert.alert(
-        'Error',
-        'Este paciente ya le pertenece',
-        [
-          {text: 'Entendido'},
-        ],
-        {cancelable: false},
-      );
+      const data = {
+        name,
+        wheight,
+        birthday,
+        email,
+        height,
+        sex,
+        bronchitis,
+        hearthDisease,
+        renalDisease,
+        prostaticHyperplasia,
+        pregnancy,
+        hyperthyroidism,
+        cough,
+        venousInsufficiency,
+        cardioInsufficiency,
+        migraine,
+        goutDisease,
+        anxiety,
+        cocaineAddiction,
+        depression,
+        diabetes,
+      };
+
+      const response = await addPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', data);
+      if (response.doctorProfile !== undefined) {
+        ToastAndroid.show('Se agregon exito el paciente', ToastAndroid.SHORT);
+        navigation.goBack();
+      } else {
+        Alert.alert(
+          'Error',
+          'Este paciente ya le pertenece',
+          [
+            { text: 'Entendido' },
+          ],
+          { cancelable: false },
+        );
+      }
     }
+    this.setState({ loading: false });
   }
-  this.setState({loading: false});
-  }
+
+  renderCheckBox = (name) => (
+    <View key={name} style={styles.horizontal}>
+      <CheckBox
+        style={styles.checkbox}
+        onChange={() => this.setState({ [name]: !this.state[name] })}
+        value={this.state[name]}
+      /><Text> {name} </Text>
+    </View>
+  );
 
   render() {
     const {
@@ -79,9 +135,27 @@ class AddPatientView extends Component {
       height,
       sex,
       loading,
+      diabetes,
     } = this.state;
+    const diseases = [
+      'smoke',
+      'bronchitis',
+      'hearthDisease',
+      'renalDisease',
+      'prostaticHyperplasia',
+      'pregnancy',
+      'hyperthyroidism',
+      'cough',
+      'venousInsufficiency',
+      'cardioInsufficiency',
+      'migraine',
+      'goutDisease',
+      'anxiety',
+      'cocaineAddiction',
+      'depression'
+    ];
     return (
-      <View>
+      <ScrollView>
         <Text> AddPatientView </Text>
         <TextInput
           style={styles.textInput}
@@ -159,14 +233,25 @@ class AddPatientView extends Component {
           onChangeText={text => this.setState({ height: text })}
           value={height}
         />
-
+        <Text>Diabetes</Text>
+        <Picker
+          selectedValue={diabetes}
+          style={{ height: 50, width: '90%', alignSelf: 'center' }}
+          onValueChange={(itemValue) =>
+            this.setState({ diabetes: itemValue })
+          }>
+          <Picker.Item label="No tiene" value="0" />
+          <Picker.Item label="Tipo 1" value="1" />
+          <Picker.Item label="Tipo 2" value="2" />
+        </Picker>
+        {diseases.map(disease => this.renderCheckBox(disease))}
         <TouchableHighlight onPress={
-          () => {if (!loading) this.submitPatient()}
+          () => { if (!loading) this.submitPatient() }
         } style={{ width: '90%', alignSelf: 'center', borderRadius: 12, }} >
-          <Text style={styles.button}> AddPatientView </Text>
+          <Text style={styles.button}> Add Patient </Text>
         </TouchableHighlight>
 
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -198,5 +283,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: 'white',
     fontWeight: 'bold',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10
+  },
+  scroll: {
+    margin: 10,
+    height: 300,
   }
 });

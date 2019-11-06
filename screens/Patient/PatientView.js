@@ -21,7 +21,7 @@ class PatientView extends Component {
 
     getPatient = async () => {
         const { id } = this.props.navigation.state.params;
-        const response = await fetchPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcxMDI4MzQzfQ.mnNI2rW_jRx4vqpPrcvsjZKuUZqgC4rr7HdGGDKCnCI', id);
+        const response = await fetchPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', id);
         if (response) {
             this.setState({ patient: response });
         }
@@ -29,7 +29,7 @@ class PatientView extends Component {
 
     fetchAppointments = async () => {
         const { id } = this.props.navigation.state.params;
-        const response = await getAppointments('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcxMDI4MzQzfQ.mnNI2rW_jRx4vqpPrcvsjZKuUZqgC4rr7HdGGDKCnCI', id);
+        const response = await getAppointments('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', id);
         if (response) {
             this.setState({ appointments: response });
         }
@@ -58,6 +58,15 @@ class PatientView extends Component {
                             <Text>Fecha: {item.date}</Text>
                             <Text>Presion sistolica: {item.systolicPressure}</Text>
                             <Text>Presion diastolica: {item.diastolicPressure}</Text>
+                            <Text>Peso: {item.wheight}kg</Text>
+                            <Text>Indice de masa muscular: {item.icm}</Text>
+                            <Text>Riesgo: {item.cr}%</Text>
+                            <Text>Hipertension: {item.hipertension}</Text>
+                            {item.medicines.length ? ( <Text>Medicinas: {item.medicines.map(med => med.medicine.name)}</Text>) : 
+                                ( <Text>Recomendaciones: Caminar 30 min diarios, no fumar, dieta dash</Text>)
+                            }
+                           
+
                         </View>
                     )}
                     keyExtractor={(item) => item._id}

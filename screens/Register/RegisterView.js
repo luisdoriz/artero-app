@@ -5,6 +5,7 @@ import { postAppointment } from '../../data/appointment';
 const initialState = {
   systolicPressure: undefined,
   diastolicPressure: undefined,
+  wheight: undefined,
   loading: false,
 }
 class RegisterView extends Component {
@@ -21,9 +22,10 @@ class RegisterView extends Component {
     const {
       systolicPressure,
       diastolicPressure,
+      wheight,
     } = this.state;
     this.setState({ loading: true });
-    if (diastolicPressure === undefined || systolicPressure === undefined) {
+    if (diastolicPressure === undefined || systolicPressure === undefined || wheight === undefined) {
       Alert.alert(
         'Error',
         'Debe de completar todos los campos',
@@ -37,10 +39,11 @@ class RegisterView extends Component {
       const data = {
         systolicPressure,
         diastolicPressure,
+        wheight,
         patientId: id,
       };
 
-      const response = await postAppointment('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcxMDI4MzQzfQ.mnNI2rW_jRx4vqpPrcvsjZKuUZqgC4rr7HdGGDKCnCI', data);
+      const response = await postAppointment('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', data);
       console.log(response);
       console.log(data);
       if (response) {
@@ -65,6 +68,7 @@ class RegisterView extends Component {
       systolicPressure,
       diastolicPressure,
       loading,
+      wheight,
     } = this.state;
     return (
       <View>
@@ -90,11 +94,20 @@ class RegisterView extends Component {
           onChangeText={text => this.setState({ diastolicPressure: text })}
           value={diastolicPressure}
         />
-
+        <TextInput
+          style={styles.textInput}
+          placeholder="Peso (kg)"
+          keyboardType={'numeric'}
+          underlineColorAndroid={
+            '#D3D3D3'
+          }
+          onChangeText={text => this.setState({ wheight: text })}
+          value={wheight}
+        />
         <TouchableHighlight onPress={
           () => { if (!loading) this.submitAppointment() }
         } style={{ width: '90%', alignSelf: 'center', borderRadius: 12, }} >
-          <Text style={styles.button}> RegisterView </Text>
+          <Text style={styles.button}> Submit </Text>
         </TouchableHighlight>
 
       </View>
