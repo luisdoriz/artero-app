@@ -44,8 +44,6 @@ class RegisterView extends Component {
       };
 
       const response = await postAppointment('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', data);
-      console.log(response);
-      console.log(data);
       if (response) {
         ToastAndroid.show('Se registro con exito', ToastAndroid.SHORT);
         navigation.goBack();
@@ -71,14 +69,14 @@ class RegisterView extends Component {
       wheight,
     } = this.state;
     return (
-      <View>
-        <Text> RegisterView </Text>
+      <View style={{ padding: '2%' }}>
+        <Text style={styles.text}>Diagnóstico</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Presion sistolica"
+          placeholder="Presión Sistólica   "
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#D3D3D3'
+            '#0077B6'
           }
           onChangeText={text => this.setState({ systolicPressure: text })}
           value={systolicPressure}
@@ -86,10 +84,10 @@ class RegisterView extends Component {
 
         <TextInput
           style={styles.textInput}
-          placeholder="Presion diastolica"
+          placeholder="Presión Diastólica   "
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#D3D3D3'
+            '#0077B6'
           }
           onChangeText={text => this.setState({ diastolicPressure: text })}
           value={diastolicPressure}
@@ -99,7 +97,7 @@ class RegisterView extends Component {
           placeholder="Peso (kg)"
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#D3D3D3'
+            '#0077B6'
           }
           onChangeText={text => this.setState({ wheight: text })}
           value={wheight}
@@ -107,7 +105,7 @@ class RegisterView extends Component {
         <TouchableHighlight onPress={
           () => { if (!loading) this.submitAppointment() }
         } style={{ width: '90%', alignSelf: 'center', borderRadius: 12, }} >
-          <Text style={styles.button}> Submit </Text>
+          <Text style={styles.button}> Terminar </Text>
         </TouchableHighlight>
 
       </View>
@@ -119,19 +117,27 @@ export default RegisterView;
 
 
 const styles = StyleSheet.create({
+  text: {
+    color: '#0077B6',
+    alignSelf: 'center',
+    marginBottom: 50,
+    fontSize: 50
+  },
   textInput: {
     height: 40,
     paddingLeft: 6,
-    marginBottom: 15,
+    marginBottom: 50,
     width: '90%',
+    color: '#0077B6',
     alignSelf: "center",
   },
   button: {
-    backgroundColor: 'blue',
-    borderColor: 'white',
+    backgroundColor: 'white',
+    borderColor: '#0077B6',
     borderWidth: 1,
     borderRadius: 12,
-    color: 'white',
+    color: '#0077B6',
+    marginBottom: 30,
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',

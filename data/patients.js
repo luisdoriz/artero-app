@@ -24,10 +24,7 @@ export const addPatient = async (token, data) => (
 export const searchPatient = async (token, name) => {
   api.patients.search(token, name)
     .then((response) => response.json())
-    .then((response) => {
-      console.log(response);
-      return response;
-    })
+    .then((response) => response)
     .catch((error) => ({ error }))
 }
 

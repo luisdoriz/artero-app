@@ -5,10 +5,10 @@ import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 const TouchableSquareView = (props) => {
     return (
         <TouchableOpacity style={styles.clickable} onPress={props.onPress}>
-            {props.img !== null > 1 && <Image
+            {/* {props.img !== null > 1 && <Image
                 style={{ width: 50, height: 50 }}
                 source={props.img}
-            />}
+            />} */}
             <Text style={styles.text}>{props.text}</Text>
         </TouchableOpacity>
     )
@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 18,
         fontWeight: 'bold',
+        color: '#0077B6'
     },
     clickable: {
-        flexDirection: 'row',
+        // flexDirection: 'column',
         alignSelf: 'center',
         justifyContent: 'space-between',
         borderRadius: 20,
@@ -42,6 +43,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 15,
         borderWidth: 1,
-        borderColor: 'black',
+        borderColor: '#0077B6',
     },
 });

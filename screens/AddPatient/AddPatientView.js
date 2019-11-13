@@ -7,8 +7,8 @@ const initialState = {
   name: undefined,
   birthday: undefined,
   email: undefined,
-  wheight: undefined,
-  height: undefined,
+  wheight: '0',
+  height: '0',
   sex: 0,
   loading: false,
   smoke: false,
@@ -26,6 +26,7 @@ const initialState = {
   anxiety: false,
   cocaineAddiction: false,
   depression: false,
+  emailValidate: false,
   diabetes: 0,
 }
 class AddPatientView extends Component {
@@ -61,17 +62,21 @@ class AddPatientView extends Component {
       depression,
       diabetes,
       loading,
+      emailValidate,
     } = this.state;
     this.setState({ loading: true });
-    if (name === undefined || wheight === undefined || height === undefined || email === undefined || birthday === undefined) {
-      Alert.alert(
-        'Error',
-        'Debe de completar todos los campos',
-        [
-          { text: 'Entendido' },
-        ],
-        { cancelable: false },
-      );
+    if (name === undefined || wheight === undefined || height === undefined || email === undefined || birthday === undefined || emailValidate) {
+      if (name === undefined || wheight === undefined || height === undefined || email === undefined || birthday === undefined) {
+        Alert.alert(
+          'Error',
+          'Debe de completar todos los campos',
+          [
+            { text: 'Entendido' },
+          ],
+          { cancelable: false },
+        );
+      }
+
     } else {
 
       const data = {
@@ -82,6 +87,7 @@ class AddPatientView extends Component {
         height,
         sex,
         bronchitis,
+        smoke,
         hearthDisease,
         renalDisease,
         prostaticHyperplasia,
@@ -116,15 +122,31 @@ class AddPatientView extends Component {
     this.setState({ loading: false });
   }
 
-  renderCheckBox = (name) => (
-    <View key={name} style={styles.horizontal}>
+  changeNumber = (name, value) => {
+    if (Number(value) >=0) {
+      this.setState({ [name]: value });
+    }
+  }
+
+  renderCheckBox = (disease) => (
+    <View key={disease.name} style={styles.horizontal}>
       <CheckBox
         style={styles.checkbox}
-        onChange={() => this.setState({ [name]: !this.state[name] })}
-        value={this.state[name]}
-      /><Text> {name} </Text>
+        onChange={() => this.setState({ [disease.name]: !this.state[disease.name] })}
+        value={this.state[disease.name]}
+      /><Text style={{ color: '#0077B6', fontSize: 20, width: '80%' }}> {disease.label} </Text>
     </View>
   );
+
+  validate = (text) => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(text) === false) {
+      this.setState({ email: text, emailValidate: true });
+    }
+    else {
+      this.setState({ email: text, emailValidate: false });
+    }
+  }
 
   render() {
     const {
@@ -136,48 +158,95 @@ class AddPatientView extends Component {
       sex,
       loading,
       diabetes,
+      emailValidate,
     } = this.state;
     const diseases = [
-      'smoke',
-      'bronchitis',
-      'hearthDisease',
-      'renalDisease',
-      'prostaticHyperplasia',
-      'pregnancy',
-      'hyperthyroidism',
-      'cough',
-      'venousInsufficiency',
-      'cardioInsufficiency',
-      'migraine',
-      'goutDisease',
-      'anxiety',
-      'cocaineAddiction',
-      'depression'
+      {
+        name: 'smoke',
+        label: '¿Fuma?'
+      },
+      {
+        name: 'bronchitis',
+        label: 'Bronquitis'
+      },
+      {
+        name: 'hearthDisease',
+        label: 'Enfermedad cardiaca'
+      },
+      {
+        name: 'renalDisease',
+        label: 'Enfermedad renal'
+      },
+      {
+        name: 'prostaticHyperplasia',
+        label: 'Hiperplasia prostática'
+      },
+      {
+        name: 'pregnancy',
+        label: 'Embarazo'
+      },
+      {
+        name: 'hyperthyroidism',
+        label: 'Hipertiroidismo'
+      },
+      {
+        name: 'cough',
+        label: 'Tos'
+      },
+      {
+        name: 'venousInsufficiency',
+        label: 'Insuficencia Venosa'
+      },
+      {
+        name: 'cardioInsufficiency',
+        label: 'Insuficiencia Cardiaca'
+      },
+      {
+        name: 'migraine',
+        label: 'Migraña'
+      },
+      {
+        name: 'goutDisease',
+        label: 'Gota'
+      },
+      {
+        name: 'anxiety',
+        label: 'Ansiedad'
+      },
+      {
+        name: 'cocaineAddiction',
+        label: 'Cocaína'
+      },
+      {
+        name: 'depression',
+        label: 'Depresión'
+      }
     ];
     return (
-      <ScrollView>
-        <Text> AddPatientView </Text>
+      <ScrollView style={styles.view}>
+        <Text style={styles.text}> Registro </Text>
         <TextInput
           style={styles.textInput}
           placeholder="Nombre"
           underlineColorAndroid={
-            '#D3D3D3'
+            '#0077B6'
           }
           onChangeText={text => this.setState({ name: text })}
           value={name}
         />
+        {emailValidate && <Text style={{ color: 'red', marginLeft: '8%' }}>El correo no es valido</Text>}
         <TextInput
           style={styles.textInput}
           placeholder="Email"
           underlineColorAndroid={
-            '#D3D3D3'
+            '#0077B6'
           }
-          onChangeText={text => this.setState({ email: text })}
+          onChangeText={text => this.validate(text)}
           value={email}
         />
         <Picker
           selectedValue={sex}
-          style={{ height: 50, width: '90%', alignSelf: 'center' }}
+          style={{ height: 50, width: '90%', alignSelf: 'center', marginBottom: 50 }}
           onValueChange={(itemValue) =>
             this.setState({ sex: itemValue })
           }>
@@ -185,7 +254,7 @@ class AddPatientView extends Component {
           <Picker.Item label="Masculino" value="1" />
         </Picker>
         <View
-          style={{ alignSelf: 'center', width: '90%', alignContent: 'center' }}
+          style={{ alignSelf: 'center', width: '90%', alignContent: 'center', marginBottom: 50 }}
         >
           <DatePicker
             style={{ width: 200 }}
@@ -193,7 +262,6 @@ class AddPatientView extends Component {
             mode="date"
             placeholder="Fecha de nacimiento"
             format="YYYY-MM-DD"
-            minDate="1930-01-01"
             maxDate="2019-01-01"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
@@ -217,9 +285,9 @@ class AddPatientView extends Component {
           placeholder="Peso (kg)"
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#D3D3D3'
+            '#0077B6'
           }
-          onChangeText={text => this.setState({ wheight: text })}
+          onChangeText={text => this.changeNumber('wheight', text)}
           value={wheight}
         />
 
@@ -228,15 +296,15 @@ class AddPatientView extends Component {
           placeholder="Altura (m)"
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#D3D3D3'
+            '#0077B6'
           }
-          onChangeText={text => this.setState({ height: text })}
+          onChangeText={text => this.changeNumber('height', text)}
           value={height}
         />
-        <Text>Diabetes</Text>
+        <Text style={{ alignSelf: 'center', color: '#0077B6', fontSize: 20 }}>Diabetes</Text>
         <Picker
           selectedValue={diabetes}
-          style={{ height: 50, width: '90%', alignSelf: 'center' }}
+          style={{ height: 50, width: '90%', alignSelf: 'center', fontSize: 20, marginBottom: 25 }}
           onValueChange={(itemValue) =>
             this.setState({ diabetes: itemValue })
           }>
@@ -248,7 +316,7 @@ class AddPatientView extends Component {
         <TouchableHighlight onPress={
           () => { if (!loading) this.submitPatient() }
         } style={{ width: '90%', alignSelf: 'center', borderRadius: 12, }} >
-          <Text style={styles.button}> Add Patient </Text>
+          <Text style={styles.button}> Agregar Paciente </Text>
         </TouchableHighlight>
 
       </ScrollView>
@@ -260,19 +328,29 @@ export default AddPatientView;
 
 
 const styles = StyleSheet.create({
+  view: {
+    padding: '2%',
+  },
+  text: {
+    color: '#0077B6',
+    alignSelf: 'center',
+    fontSize: 50
+  },
   textInput: {
     height: 40,
     paddingLeft: 6,
-    marginBottom: 15,
+    marginBottom: 50,
     width: '90%',
+    color: '#0077B6',
     alignSelf: "center",
   },
   button: {
-    backgroundColor: 'blue',
-    borderColor: 'white',
+    backgroundColor: 'white',
+    borderColor: '#0077B6',
     borderWidth: 1,
     borderRadius: 12,
-    color: 'white',
+    color: '#0077B6',
+    marginBottom: 30,
     fontSize: 24,
     fontWeight: 'bold',
     overflow: 'hidden',
