@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -10,6 +10,8 @@ import { Dimensions } from 'react-native';
 const WIDTH = Dimensions.get('window').width;
 
 import Home from '../screens/Home';
+import SignIn from '../screens/SignIn';
+import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import AddPatient from '../screens/AddPatient';
 import Patients from '../screens/Patients';
 import Patient from '../screens/Patient';
@@ -58,7 +60,20 @@ const PatientsNavigation = createStackNavigator({
 	},
 });
 
-const AppNavigation = createMaterialBottomTabNavigator({
+// const auth = createSwitchNavigator(
+// 	{
+// 		AuthLoading: AuthLoadingScreen,
+// 		App: AppNavigation,
+// 		Auth: authStack,
+// 	},
+// 	{
+// 		initialRouteName: 'AuthLoading',
+// 	}
+// );
+
+// const authStack = createStackNavigator({ SignIn: SignIn});
+
+const AppNavigation = createBottomTabNavigator({
 	Home: {
 		screen: HomeNavigation,
 		navigationOptions: {

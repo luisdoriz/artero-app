@@ -22,7 +22,7 @@ class PatientView extends Component {
 
     getPatient = async () => {
         const { id } = this.props.navigation.state.params;
-        const response = await fetchPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', id);
+        const response = await fetchPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo', id);
         if (response) {
             this.setState({ patient: response });
         }
@@ -31,7 +31,7 @@ class PatientView extends Component {
 
     fetchAppointments = async () => {
         const { id } = this.props.navigation.state.params;
-        const response = await getAppointments('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', id);
+        const response = await getAppointments('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo', id);
         if (response) {
             this.setState({ appointments: response });
         }

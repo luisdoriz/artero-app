@@ -104,7 +104,7 @@ class AddPatientView extends Component {
         diabetes,
       };
 
-      const response = await addPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', data);
+      const response = await addPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo', data);
       if (response.doctorProfile !== undefined) {
         ToastAndroid.show('Se agregon exito el paciente', ToastAndroid.SHORT);
         navigation.goBack();
@@ -123,7 +123,7 @@ class AddPatientView extends Component {
   }
 
   changeNumber = (name, value) => {
-    if (Number(value) >=0) {
+    if (Number(value) >= 0) {
       this.setState({ [name]: value });
     }
   }
@@ -160,6 +160,13 @@ class AddPatientView extends Component {
       diabetes,
       emailValidate,
     } = this.state;
+    let pregnancyValue = null;
+    if (!sex) {
+      pregnancyValue = {
+        name: 'pregnancy',
+        label: 'Embarazo'
+      };
+    }
     const diseases = [
       {
         name: 'smoke',
@@ -181,10 +188,7 @@ class AddPatientView extends Component {
         name: 'prostaticHyperplasia',
         label: 'Hiperplasia prostática'
       },
-      {
-        name: 'pregnancy',
-        label: 'Embarazo'
-      },
+      pregnancyValue,
       {
         name: 'hyperthyroidism',
         label: 'Hipertiroidismo'
@@ -312,7 +316,7 @@ class AddPatientView extends Component {
           <Picker.Item label="Tipo 1" value="1" />
           <Picker.Item label="Tipo 2" value="2" />
         </Picker>
-        {diseases.map(disease => this.renderCheckBox(disease))}
+        {diseases.map(disease => disease !=null && this.renderCheckBox(disease))}
         <TouchableHighlight onPress={
           () => { if (!loading) this.submitPatient() }
         } style={{ width: '90%', alignSelf: 'center', borderRadius: 12, }} >
