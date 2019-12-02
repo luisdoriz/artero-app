@@ -17,10 +17,11 @@ import Patients from '../screens/Patients';
 import Patient from '../screens/Patient';
 import SelectPatient from '../screens/SelectPatient';
 import Register from '../screens/Register';
+import PatientConditions from '../screens/PatientsConditions';
+import Diagnosis from '../screens/Diagnosis';
 
 const HomeNavigation = createStackNavigator({
 	Home: Home,
-	AddPatient: AddPatient,
 });
 
 const RegisterNavigation = createStackNavigator({
@@ -43,15 +44,36 @@ const RegisterNavigation = createStackNavigator({
 				color: '#038BD3'
 			},
 		}),
+	},
+	Diagnosis: {
+		screen: Diagnosis,
+		navigationOptions: () => ({
+			title: 'Diagnositco',
+			headerTitleStyle: {
+				width: WIDTH - 75,
+				color: '#038BD3'
+			},
+		}),
 	}
 });
 
 const PatientsNavigation = createStackNavigator({
 	Patients: Patients,
+	AddPatient: AddPatient,
 	Patient: {
 		screen: Patient,
 		navigationOptions: ({ navigation }) => ({
 			title: navigation.state.params.patient,
+			headerTitleStyle: {
+				width: WIDTH - 75,
+				color: '#038BD3'
+			},
+		}),
+	},
+	PatientConditions: {
+		screen: PatientConditions,
+		navigationOptions: ({ navigation }) => ({
+			title: `Condiciones de ${navigation.state.params.patient.handleName}`,
 			headerTitleStyle: {
 				width: WIDTH - 75,
 				color: '#038BD3'
@@ -74,16 +96,16 @@ const PatientsNavigation = createStackNavigator({
 // const authStack = createStackNavigator({ SignIn: SignIn});
 
 const AppNavigation = createBottomTabNavigator({
-	Home: {
-		screen: HomeNavigation,
-		navigationOptions: {
-			tabBarLabel: 'Home',
-			tabBarIcon: ({ tintColor }) => (
-				<View>
-					<Icon style={[{ color: tintColor }]} size={25} name={'ios-person'} />
-				</View>),
-		}
-	},
+	// Home: {
+	// 	screen: HomeNavigation,
+	// 	navigationOptions: {
+	// 		tabBarLabel: 'Home',
+	// 		tabBarIcon: ({ tintColor }) => (
+	// 			<View>
+	// 				<Icon style={[{ color: tintColor }]} size={25} name={'ios-person'} />
+	// 			</View>),
+	// 	}
+	// },
 	Register: {
 		screen: RegisterNavigation,
 		navigationOptions: {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, Picker, TextInput, CheckBox, StyleSheet, TouchableHighlight, Alert, ToastAndroid, ScrollView } from 'react-native'
+import { Text, View, Picker, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid, ScrollView, AsyncStorage } from 'react-native'
+import { CheckBox } from 'react-native-elements'
+
 import DatePicker from 'react-native-datepicker';
 import { addPatient } from '../../data/patients';
 
@@ -103,8 +105,8 @@ class AddPatientView extends Component {
         depression,
         diabetes,
       };
-
-      const response = await addPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo', data);
+      const token = await this.getToken();
+      const response = await addPatient(token, data);
       if (response.doctorProfile !== undefined) {
         ToastAndroid.show('Se agregon exito el paciente', ToastAndroid.SHORT);
         navigation.goBack();
@@ -127,13 +129,14 @@ class AddPatientView extends Component {
       this.setState({ [name]: value });
     }
   }
+	getToken = async () => (await AsyncStorage.getItem('tkn'));
 
   renderCheckBox = (disease) => (
     <View key={disease.name} style={styles.horizontal}>
       <CheckBox
         style={styles.checkbox}
-        onChange={() => this.setState({ [disease.name]: !this.state[disease.name] })}
-        value={this.state[disease.name]}
+        onPress={() => this.setState({ [disease.name]: !this.state[disease.name] })}
+        checked={this.state[disease.name]}
       /><Text style={{ color: '#0077B6', fontSize: 20, width: '80%' }}> {disease.label} </Text>
     </View>
   );
@@ -248,6 +251,7 @@ class AddPatientView extends Component {
           onChangeText={text => this.validate(text)}
           value={email}
         />
+        <View>
         <Picker
           selectedValue={sex}
           style={{ height: 50, width: '90%', alignSelf: 'center', marginBottom: 50 }}
@@ -257,6 +261,8 @@ class AddPatientView extends Component {
           <Picker.Item label="Femenino" value="0" />
           <Picker.Item label="Masculino" value="1" />
         </Picker>
+        </View>
+       
         <View
           style={{ alignSelf: 'center', width: '90%', alignContent: 'center', marginBottom: 50 }}
         >
@@ -283,7 +289,7 @@ class AddPatientView extends Component {
             onDateChange={(date) => this.setState({ birthday: date })}
           />
         </View>
-
+        <Text style={styles.label}>Peso (kg)</Text>
         <TextInput
           style={styles.textInput}
           placeholder="Peso (kg)"
@@ -294,10 +300,10 @@ class AddPatientView extends Component {
           onChangeText={text => this.changeNumber('wheight', text)}
           value={wheight}
         />
-
+        <Text style={styles.label}>Altura (cm)</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Altura (m)"
+          placeholder="Altura (cm)"
           keyboardType={'numeric'}
           underlineColorAndroid={
             '#0077B6'
@@ -339,6 +345,10 @@ const styles = StyleSheet.create({
     color: '#0077B6',
     alignSelf: 'center',
     fontSize: 50
+  },
+  label: {
+    color: '#0077B6',
+    alignSelf: 'center',
   },
   textInput: {
     height: 40,

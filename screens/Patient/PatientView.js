@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ActivityIndicator, StyleSheet, FlatList, ScrollView, RefreshControl } from 'react-native'
+import { Text, View, ActivityIndicator, StyleSheet, FlatList, ScrollView, RefreshControl, Button, AsyncStorage } from 'react-native'
 
 import { fetchPatient } from '../../data/patients';
 import { getAppointments } from '../../data/appointment';
@@ -22,19 +22,34 @@ class PatientView extends Component {
 
     getPatient = async () => {
         const { id } = this.props.navigation.state.params;
-        const response = await fetchPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo', id);
+        const token = await this.getToken();
+        const response = await fetchPatient(token, id);
         if (response) {
             this.setState({ patient: response });
         }
         this.changeLoading();
     }
 
+	getToken = async () => (await AsyncStorage.getItem('tkn'));
+
     fetchAppointments = async () => {
         const { id } = this.props.navigation.state.params;
-        const response = await getAppointments('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo', id);
+        const token = await this.getToken();
+        const response = await getAppointments(token, id);
         if (response) {
             this.setState({ appointments: response });
         }
+    }
+
+    navigatePatientConditions = () => {
+        const { navigation } = this.props;
+        const { patient } = this.state;
+        navigation.navigate(
+            'PatientConditions',
+            {
+                patient: patient,
+            }
+        )
     }
 
     getDate = (iso) => {
@@ -86,6 +101,7 @@ class PatientView extends Component {
                     {patient.sex ? (<Text style={styles.text}> Sexo: Masculino </Text>) : (<Text style={styles.text}> Sexo: Femenino </Text>)}
                     {patient.weight && (<Text style={styles.text}> Altura: {patient.weight}kg </Text>)}
                     {patient.birthday && (<Text style={styles.text}> birth: {this.getDate(patient.birthday)} </Text>)}
+                    <Button title={'Condiciones'} onPress={() => this.navigatePatientConditions()}/>
                     <Text style={styles.header}>Registros: </Text>
                     {appointments.size !== 0 && <FlatList
                         data={appointments}

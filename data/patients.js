@@ -1,11 +1,12 @@
 import api from '../api';
 
-export const fetchPatients = async (token) => (
-  api.patients.get(token)
+export const fetchPatients = async (token) => {
+  console.log(token)
+  return api.patients.get(token)
     .then((response) => response.json())
     .then((response) => response)
     .catch((error) => ({ error }))
-);
+};
 
 export const fetchPatient = async (token, id) => (
   api.patients.getOne(token, id)
@@ -21,8 +22,16 @@ export const addPatient = async (token, data) => (
     .catch((error) => ({ error }))
 );
 
-export const searchPatient = async (token, name) => {
-  api.patients.search(token, name)
+export const putPatient = async (token, id, data) => (
+  api.patients.put(token, id, data)
+    .then((response) => response.json())
+    .then((response) => response)
+    .catch((error) => ({ error }))
+);
+
+
+export const searchPatient = async (name) => {
+  api.patients.search(name)
     .then((response) => response.json())
     .then((response) => response)
     .catch((error) => ({ error }))

@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Text, View, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid } from 'react-native'
+import React, { Component } from 'react';
+import { Text, View, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid, AsyncStorage } from 'react-native';
+
 import { postAppointment } from '../../data/appointment';
 
 const initialState = {
@@ -15,10 +16,12 @@ class RegisterView extends Component {
     this.state = initialState;
   }
 
+  getToken = async () => (await AsyncStorage.getItem('tkn'));
+
 
   submitAppointment = async () => {
     const { navigation } = this.props;
-    const { id } = this.props.navigation.state.params;
+    const { id } = navigation.state.params;
     const {
       systolicPressure,
       diastolicPressure,
@@ -42,11 +45,16 @@ class RegisterView extends Component {
         wheight,
         patientId: id,
       };
-
-      const response = await postAppointment('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTcyNTQ1Nzg5fQ.gLKYQz36_O9f9qAsu9DWM5kn6pUP0H1vEljWJQmMQsQ', data);
+      const token = await this.getToken();
+      const response = await postAppointment(token, data);
       if (response) {
+        navigation.navigate(
+          'Diagnosis',
+          {
+            diagnosis: response,
+          }
+        )
         ToastAndroid.show('Se registro con exito', ToastAndroid.SHORT);
-        navigation.goBack();
       } else {
         Alert.alert(
           'Error',

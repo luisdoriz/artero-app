@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid } from 'react-native'
+import { Text, View, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid, AsyncStorage } from 'react-native'
 import { loginUser } from '../../data/user';
 
 const initialState = {
@@ -15,16 +15,18 @@ class SignInView extends Component {
 
   submitForm = async () => {
     this.setState({ loading: true })
-    const { email, password } = this.props;
+    const { email, password } = this.state;
     const data = {
       email, password
     };
-    const { response: token } = await loginUser(data);
-
-    if (token) {
-      console.log(token)
+    const response = await loginUser(data);
+    if (response) {
+      await AsyncStorage.setItem('tkn', response.token);
+      this.props.updateToken(response.token);
+      ToastAndroid.show('Inicio sesion de manera correcta', ToastAndroid.SHORT);
       this.setState({ loading: false })
     } else {
+      ToastAndroid.show('No se pudo iniciar sesion con esos datos, favor de verificar.', ToastAndroid.SHORT);
       this.setState({ loading: false })
     }
   }
@@ -44,6 +46,7 @@ class SignInView extends Component {
       password,
       email,
       loading,
+      emailValidate,
     } = this.state;
     return (
       <View style={styles.view}>
@@ -62,6 +65,7 @@ class SignInView extends Component {
           style={styles.textInput}
           placeholder="Contraseña"
           type="password"
+          secureTextEntry={true} 
           underlineColorAndroid={
             '#0077B6'
           }

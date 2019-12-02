@@ -1,4 +1,5 @@
 const host = 'https://artero.herokuapp.com/api';
+import { AsyncStorage } from 'react-native';
 
 const getHeader = {
   method: 'GET',
@@ -30,25 +31,30 @@ const putHeader = {
     'Content-Type': 'application/json',
   },
 };
-const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkZDg2YjM4MTUyNTkyN2UxOGRiMmNiZiIsIm5hbWUiOiJEYW5pZWwgUmFtaXJleiIsImlhdCI6MTU3NDY4ODkzNH0.y4EGLDuTRSKffTbEvESuyiUefKfSDE-V3KXk83uM49M';
+
 
 const api = {
   host,
   appointment: {
-    post( data) {
+    post(token, data) {
       const url = `${host}/appointment`;
       postHeader.body = JSON.stringify(data);
       postHeader.headers.authorization = token;
       return fetch(url, postHeader);
     },
-    get( id) {
+    get(token, id) {
       const url = `${host}/appointment/${id}`;
+      getHeader.headers.authorization = token;
+      return fetch(url, getHeader);
+    },
+    getById(token, id) {
+      const url = `${host}/appointment/one/${id}`;
       getHeader.headers.authorization = token;
       return fetch(url, getHeader);
     },
   },
   patients: {
-    get() {
+    get(token) {
       const url = `${host}/patients`;
       getHeader.headers.authorization = token;
       return fetch(url, getHeader);
@@ -58,32 +64,38 @@ const api = {
       getHeader.headers.authorization = token;
       return fetch(url, getHeader);
     },
-    post( data) {
+    post(token, data) {
       const url = `${host}/profile/newPatient`;
       postHeader.body = JSON.stringify(data);
       postHeader.headers.authorization = token;
       return fetch(url, postHeader);
     },
-    getOne( id) {
+    put(token, id, data) {
+      const url = `${host}/patients/${id}`;
+      putHeader.body = JSON.stringify(data);
+      putHeader.headers.authorization = token;
+      return fetch(url, putHeader);
+    },
+    getOne(token, id) {
       const url = `${host}/patients/${id}`;
       getHeader.headers.authorization = token;
       return fetch(url, getHeader);
     },
   },
   profile: {
-    put( data) {
+    put(token, data) {
       const url = `${host}/profile`;
       putHeader.headers.authorization = token;
       putHeader.body = JSON.stringify(data);
       return fetch(url, putHeader);
     },
-    post( data) {
+    post(token, data) {
       const url = `${host}/profile/newProfile`;
       postHeader.body = JSON.stringify(data);
       postHeader.headers.authorization = token;
       return fetch(url, postHeader);
     },
-    get() {
+    get(token) {
       const url = `${host}/profile`;
       getHeader.headers.authorization = token;
       return fetch(url, getHeader);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, FlatList, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, FlatList, TextInput, ScrollView, RefreshControl, Button, AsyncStorage } from 'react-native';
 
 import { fetchPatients, searchPatient } from '../../data/patients';
 import TouchableSquare from '../../components/core/TouchableSquare';
@@ -23,7 +23,8 @@ class PatientsView extends Component {
 	}
 
 	getPatients = async () => {
-		const response = await fetchPatients('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo');
+		const token = await this.getToken();
+		const response = await fetchPatients(token);
 		if (response) {
 			this.setState({ patients: response, loading: false });
 		} else {
@@ -38,7 +39,7 @@ class PatientsView extends Component {
 		// if (text.length === 0) {
 		// 	this.getPatients()
 		// } else {
-		// 	const response = await searchPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo', text);
+		// 	const response = await searchPatient(text);
 		// 	console.log(response, '😎');
 		// 	if (response) {
 		// 		console.log(response, '😎');
@@ -83,6 +84,10 @@ class PatientsView extends Component {
 		this.setState({ loading: !this.state.loading });
 	}
 
+	logOut = async () => {
+		await AsyncStorage.setItem('tkn', 'false');
+	}
+
 	onRefresh = () => {
 		this.changeLoading();
 		setTimeout(() => {
@@ -94,6 +99,8 @@ class PatientsView extends Component {
 			// }
 		}, 2000);
 	};
+
+	getToken = async () => (await AsyncStorage.getItem('tkn'));
 
 	render() {
 		const { patients, registerPatients, filter, loading } = this.state;
@@ -110,7 +117,10 @@ class PatientsView extends Component {
 					onChangeText={(text) => this.searchPatientByName(text)}
 					value={filter}
 				/>
+				<Button title={'Agregar Paciente'} onPress={() => navigation.navigate('AddPatient')} />
+
 				{loading ? <ActivityIndicator size="large" color="#0000ff" /> : this.renderPatients(patients)}
+				<Button title={'Cerrar sesion'} onPress={() => this.logOut()} />
 			</ScrollView>
 		)
 	}

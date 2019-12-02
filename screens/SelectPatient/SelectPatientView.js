@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, FlatList, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, FlatList, TextInput, ScrollView, RefreshControl, AsyncStorage } from 'react-native';
 
 import { fetchPatients, searchPatient } from '../../data/patients';
 import TouchableSquare from '../../components/core/TouchableSquare';
@@ -23,7 +23,8 @@ class SelectPatientView extends Component {
 	}
 
 	getPatients = async () => {
-		const response = await fetchPatients('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo');
+		const token = await this.getToken(); 
+		const response = await fetchPatients(token);
 		if (response) {
 			this.setState({ patients: response, loading: false });
 		} else {
@@ -36,7 +37,7 @@ class SelectPatientView extends Component {
 		// if (text.length === 0) {
 		// 	this.getPatients()
 		// } else {
-		// 	const response = await searchPatient('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTU0ODRhZmVhOTM0NjE3MGJkYmYwMiIsIm5hbWUiOiJMdWlzIERvcml6IiwiaWF0IjoxNTc0NDE2MzQzfQ.A0DwBC1ZF6HvbbjFs15Od8rbIgJAdQSMI9w1p1fAKLo', text);
+		// 	const response = await searchPatient(text);
 		// 	if (response) {
 		// 		this.setState({ patients: response, loading: false });
 		// 	} else {
@@ -44,6 +45,8 @@ class SelectPatientView extends Component {
 		// 	}
 		// }
 	}
+	getToken = async () => (await AsyncStorage.getItem('tkn'));
+
 
 	renderPatients = (patients) => {
 		const { navigation } = this.props;

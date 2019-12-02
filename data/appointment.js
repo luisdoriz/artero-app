@@ -14,4 +14,11 @@ export const getAppointments = async (token, id) => (
     .catch((error) => ({ error }))
 );
 
+export const getAppointment = async (token, id) => (
+  api.appointment.getById(token, id)
+    .then((response) => response.json())
+    .then((response) => response)
+    .catch((error) => ({ error }))
+);
+
 export default postAppointment;
