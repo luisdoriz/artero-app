@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid, AsyncStorage } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableHighlight, Alert, AsyncStorage } from 'react-native';
 
 import { postAppointment } from '../../data/appointment';
 
@@ -54,7 +54,14 @@ class RegisterView extends Component {
             diagnosis: response,
           }
         )
-        ToastAndroid.show('Se registro con exito', ToastAndroid.SHORT);
+        Alert.alert(
+          'Listo',
+          'Se registro con exito',
+          [
+            {text: 'Entendido'},
+          ],
+          {cancelable: false},
+        );
       } else {
         Alert.alert(
           'Error',
@@ -140,11 +147,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   button: {
-    backgroundColor: 'white',
-    borderColor: '#0077B6',
+    backgroundColor: '#333333',
+    borderColor: '#fff500',
     borderWidth: 1,
     borderRadius: 12,
-    color: '#0077B6',
+    color: '#fff500',
     marginBottom: 30,
     fontSize: 24,
     fontWeight: 'bold',

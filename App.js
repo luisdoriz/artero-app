@@ -9,7 +9,7 @@ export default class App extends Component {
     super(props)
 
     this.state = {
-      token: 'false',
+      token: undefined,
     }
   }
   componentDidMount() {
@@ -21,11 +21,9 @@ export default class App extends Component {
     this.token().then((token => this.setState({ token })))
   )
   render() {
-    // return <AppNavigation />
-
     const { token } = this.state;
     console.log(token);
-    if (token != 'false') {
+    if (token) {
       return <AppNavigation />
     }
     return (

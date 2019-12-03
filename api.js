@@ -1,5 +1,4 @@
 const host = 'https://artero.herokuapp.com/api';
-import { AsyncStorage } from 'react-native';
 
 const getHeader = {
   method: 'GET',

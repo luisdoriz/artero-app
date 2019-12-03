@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, ToastAndroid } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Alert, AsyncStorage } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 
 import { putPatient } from '../../data/patients';
@@ -34,7 +34,14 @@ class PatientConditionsView extends Component {
     const token = await this.getToken();
     const response = await putPatient(token, patient._id, data);
     if (response) {
-      ToastAndroid.show('Se modifico con éxito el paciente', ToastAndroid.SHORT);
+      Alert.alert(
+        'Listo',
+        'Se modifico con éxito el paciente',
+        [
+          {text: 'Entendido'},
+        ],
+        {cancelable: false},
+      );
     }
   }
 	getToken = async () => (await AsyncStorage.getItem('tkn'));
@@ -43,12 +50,14 @@ class PatientConditionsView extends Component {
     <View key={disease.name} style={styles.horizontal}>
       <CheckBox
         style={styles.checkbox}
+        title={disease.label}
         onPress={() => {
           this.editPatient(disease.name);
-          this.setState({ [disease.name]: !this.state[disease.name] });
+          this.setState({ [disease.name]: !this.state[disease.name]
+          });
         }}
         checked={this.state[disease.name]}
-      /><Text style={{ color: '#0077B6', fontSize: 20, width: '80%' }}> {disease.label} </Text>
+      />
     </View>
   );
 

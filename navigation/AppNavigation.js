@@ -96,16 +96,6 @@ const PatientsNavigation = createStackNavigator({
 // const authStack = createStackNavigator({ SignIn: SignIn});
 
 const AppNavigation = createBottomTabNavigator({
-	// Home: {
-	// 	screen: HomeNavigation,
-	// 	navigationOptions: {
-	// 		tabBarLabel: 'Home',
-	// 		tabBarIcon: ({ tintColor }) => (
-	// 			<View>
-	// 				<Icon style={[{ color: tintColor }]} size={25} name={'ios-person'} />
-	// 			</View>),
-	// 	}
-	// },
 	Register: {
 		screen: RegisterNavigation,
 		navigationOptions: {
@@ -125,10 +115,11 @@ const AppNavigation = createBottomTabNavigator({
 		}
 	},
 },
-{
-	activeColor: '#FFFFFF',
-		inactiveColor: '#D6D6D6',
-			barStyle: { backgroundColor: '#038BD3' },
-});
+// {
+// 	activeColor: '#333333',
+// 		inactiveColor: '#fff500',
+// 			barStyle: { backgroundColor: '#333333' },
+// }
+);
 
 export default createAppContainer(AppNavigation);

@@ -23,7 +23,7 @@ class SelectPatientView extends Component {
 	}
 
 	getPatients = async () => {
-		const token = await this.getToken(); 
+		const token = await this.getToken();
 		const response = await fetchPatients(token);
 		if (response) {
 			this.setState({ patients: response, loading: false });
@@ -58,22 +58,22 @@ class SelectPatientView extends Component {
 			});
 		}
 		return filtered.size !== 0 ? <FlatList
-		data={filtered}
-		renderItem={({ item }) =>
-			<TouchableSquare
-				text={item.patient.handleName}
-				img={user}
-				onPress={() =>
-					navigation.navigate(
-						'Register',
-						{
-							id: item.patient._id
-						}
-					)}
-			/>
-		}
-		keyExtractor={(item) => item._id}
-	/> : <Text> No tiene pacientes registrados </Text>;
+			data={filtered}
+			renderItem={({ item }) =>
+				<TouchableSquare
+					text={item.patient.handleName}
+					img={user}
+					onPress={() =>
+						navigation.navigate(
+							'Register',
+							{
+								id: item.patient._id
+							}
+						)}
+				/>
+			}
+			keyExtractor={(item) => item._id}
+		/> : <Text> No tiene pacientes registrados </Text>;
 	}
 
 	onRefresh = () => {
@@ -92,12 +92,15 @@ class SelectPatientView extends Component {
 				}
 				style={styles.container}>
 				<TextInput
-					style={{ height: 40, alignSelf: 'center' }}
+					underlineColorAndroid={
+						'#0077B6'
+					}
+					style={styles.textInput}
 					placeholder="Nombre del paciente"
 					onChangeText={(text) => this.searchPatientByName(text)}
 					value={filter}
 				/>
-				{loading ? 	<ActivityIndicator size="large" color="#0000ff" /> : this.renderPatients(patients)}
+				{loading ? <ActivityIndicator size="large" color="#0000ff" /> : this.renderPatients(patients)}
 			</ScrollView>
 		)
 	}
@@ -110,6 +113,14 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff'
+	},
+	textInput: {
+		height: 40,
+		paddingLeft: 6,
+		marginBottom: 50,
+		width: '90%',
+		color: '#0077B6',
+		alignSelf: "center",
 	},
 	horizontal: {
 		flexDirection: 'row',

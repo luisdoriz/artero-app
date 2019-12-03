@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid, AsyncStorage } from 'react-native'
+import { Text, View, TextInput, StyleSheet, TouchableHighlight, Alert, AsyncStorage } from 'react-native'
 import { loginUser } from '../../data/user';
 
 const initialState = {
@@ -20,13 +20,28 @@ class SignInView extends Component {
       email, password
     };
     const response = await loginUser(data);
+    console.log(response.token);
     if (response) {
       await AsyncStorage.setItem('tkn', response.token);
       this.props.updateToken(response.token);
-      ToastAndroid.show('Inicio sesion de manera correcta', ToastAndroid.SHORT);
+      Alert.alert(
+        'Listo',
+        'Inicio sesion de manera correcta',
+        [
+          {text: 'Entendido'},
+        ],
+        {cancelable: false},
+      );
       this.setState({ loading: false })
     } else {
-      ToastAndroid.show('No se pudo iniciar sesion con esos datos, favor de verificar.', ToastAndroid.SHORT);
+      Alert.alert(
+        'Error',
+        'No se pudo iniciar sesion con esos datos, favor de verificar.',
+        [
+          {text: 'Entendido'},
+        ],
+        {cancelable: false},
+      );
       this.setState({ loading: false })
     }
   }
@@ -104,11 +119,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   button: {
-    backgroundColor: 'white',
-    borderColor: '#0077B6',
+    backgroundColor: '#333333',
+    borderColor: '#fff500',
     borderWidth: 1,
     borderRadius: 12,
-    color: '#0077B6',
+    color: '#fff500',
     marginBottom: 30,
     fontSize: 24,
     fontWeight: 'bold',

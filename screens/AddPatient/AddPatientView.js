@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Picker, TextInput, StyleSheet, TouchableHighlight, Alert, ToastAndroid, ScrollView, AsyncStorage } from 'react-native'
+import { Text, View, Picker, TextInput, StyleSheet, TouchableHighlight, Alert, ScrollView, AsyncStorage } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 
 import DatePicker from 'react-native-datepicker';
@@ -108,7 +108,14 @@ class AddPatientView extends Component {
       const token = await this.getToken();
       const response = await addPatient(token, data);
       if (response.doctorProfile !== undefined) {
-        ToastAndroid.show('Se agregon exito el paciente', ToastAndroid.SHORT);
+        Alert.alert(
+          'Listo',
+          'Se agrego con éxito el paciente',
+          [
+            {text: 'Entendido'},
+          ],
+          {cancelable: false},
+        );
         navigation.goBack();
       } else {
         Alert.alert(
@@ -135,9 +142,10 @@ class AddPatientView extends Component {
     <View key={disease.name} style={styles.horizontal}>
       <CheckBox
         style={styles.checkbox}
+        title={disease.label}
         onPress={() => this.setState({ [disease.name]: !this.state[disease.name] })}
         checked={this.state[disease.name]}
-      /><Text style={{ color: '#0077B6', fontSize: 20, width: '80%' }}> {disease.label} </Text>
+      />
     </View>
   );
 
@@ -325,7 +333,7 @@ class AddPatientView extends Component {
         {diseases.map(disease => disease !=null && this.renderCheckBox(disease))}
         <TouchableHighlight onPress={
           () => { if (!loading) this.submitPatient() }
-        } style={{ width: '90%', alignSelf: 'center', borderRadius: 12, }} >
+        } style={{ width: '90%', alignSelf: 'center', borderRadius: 12 }} >
           <Text style={styles.button}> Agregar Paciente </Text>
         </TouchableHighlight>
 
@@ -340,6 +348,9 @@ export default AddPatientView;
 const styles = StyleSheet.create({
   view: {
     padding: '2%',
+  },
+  checkbox: {
+    alignItems: 'center',
   },
   text: {
     color: '#0077B6',
@@ -359,11 +370,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   button: {
-    backgroundColor: 'white',
-    borderColor: '#0077B6',
+    backgroundColor: '#333333',
+    borderColor: '#fff500',
     borderWidth: 1,
     borderRadius: 12,
-    color: '#0077B6',
+    color: '#fff500',
     marginBottom: 30,
     fontSize: 24,
     fontWeight: 'bold',

@@ -112,15 +112,18 @@ class PatientsView extends Component {
 				}
 				style={styles.container}>
 				<TextInput
-					style={{ height: 40, alignSelf: 'center' }}
+					underlineColorAndroid={
+						'#0077B6'
+					}
+					style={styles.textInput}
 					placeholder="Nombre del paciente"
 					onChangeText={(text) => this.searchPatientByName(text)}
 					value={filter}
 				/>
-				<Button title={'Agregar Paciente'} onPress={() => navigation.navigate('AddPatient')} />
+				<Button title={'Agregar Paciente'} onPress={() => navigation.navigate('AddPatient')} style={{ borderColor: '#fff500', backgroundColor:'#333333', color: '#fff500' }} />
 
 				{loading ? <ActivityIndicator size="large" color="#0000ff" /> : this.renderPatients(patients)}
-				<Button title={'Cerrar sesion'} onPress={() => this.logOut()} />
+				<Button title={'Cerrar sesion'} onPress={() => this.logOut()} style={{ borderColor: '#fff500', backgroundColor:'#333333', color: '#fff500' }} />
 			</ScrollView>
 		)
 	}
@@ -133,6 +136,14 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff'
+	},
+	textInput: {
+		height: 40,
+		paddingLeft: 6,
+		marginBottom: 50,
+		width: '90%',
+		color: '#0077B6',
+		alignSelf: "center",
 	},
 	horizontal: {
 		flexDirection: 'row',

@@ -101,7 +101,7 @@ class PatientView extends Component {
                     {patient.sex ? (<Text style={styles.text}> Sexo: Masculino </Text>) : (<Text style={styles.text}> Sexo: Femenino </Text>)}
                     {patient.weight && (<Text style={styles.text}> Altura: {patient.weight}kg </Text>)}
                     {patient.birthday && (<Text style={styles.text}> birth: {this.getDate(patient.birthday)} </Text>)}
-                    <Button title={'Condiciones'} onPress={() => this.navigatePatientConditions()}/>
+                    <Button title={'Condiciones'} onPress={() => this.navigatePatientConditions()} style={{ borderColor: '#fff500', backgroundColor:'#333333', color: '#fff500' }}/>
                     <Text style={styles.header}>Registros: </Text>
                     {appointments.size !== 0 && <FlatList
                         data={appointments}
