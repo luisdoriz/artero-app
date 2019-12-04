@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     padding: '2%',
   },
   text: {
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: 'center',
     fontSize: 50
   },
@@ -154,15 +154,15 @@ const styles = StyleSheet.create({
     paddingLeft: 6,
     marginBottom: 50,
     width: '90%',
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: "center",
   },
   button: {
     backgroundColor: 'white',
-    borderColor: '#0077B6',
+    borderColor: '#333333',
     borderWidth: 1,
     borderRadius: 12,
-    color: '#0077B6',
+    color: '#333333',
     marginBottom: 30,
     fontSize: 24,
     fontWeight: 'bold',

@@ -244,7 +244,7 @@ class AddPatientView extends Component {
           style={styles.textInput}
           placeholder="Nombre"
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.setState({ name: text })}
           value={name}
@@ -254,7 +254,7 @@ class AddPatientView extends Component {
           style={styles.textInput}
           placeholder="Email"
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.validate(text)}
           value={email}
@@ -303,7 +303,7 @@ class AddPatientView extends Component {
           placeholder="Peso (kg)"
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.changeNumber('wheight', text)}
           value={wheight}
@@ -314,12 +314,12 @@ class AddPatientView extends Component {
           placeholder="Altura (cm)"
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.changeNumber('height', text)}
           value={height}
         />
-        <Text style={{ alignSelf: 'center', color: '#0077B6', fontSize: 20 }}>Diabetes</Text>
+        <Text style={{ alignSelf: 'center', color: '#333333', fontSize: 20 }}>Diabetes</Text>
         <Picker
           selectedValue={diabetes}
           style={{ height: 50, width: '90%', alignSelf: 'center', fontSize: 20, marginBottom: 25 }}
@@ -353,12 +353,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: 'center',
     fontSize: 50
   },
   label: {
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: 'center',
   },
   textInput: {
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     paddingLeft: 6,
     marginBottom: 50,
     width: '90%',
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: "center",
   },
   button: {

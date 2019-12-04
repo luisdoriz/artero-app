@@ -26,7 +26,7 @@ class SignInView extends Component {
       this.props.updateToken(response.token);
       Alert.alert(
         'Listo',
-        'Inicio sesion de manera correcta',
+        'Inicio sesión de manera correcta',
         [
           {text: 'Entendido'},
         ],
@@ -36,7 +36,7 @@ class SignInView extends Component {
     } else {
       Alert.alert(
         'Error',
-        'No se pudo iniciar sesion con esos datos, favor de verificar.',
+        'No se pudo iniciar sesión con esos datos, favor de verificar.',
         [
           {text: 'Entendido'},
         ],
@@ -65,13 +65,13 @@ class SignInView extends Component {
     } = this.state;
     return (
       <View style={styles.view}>
-        <Text style={styles.text}> Inica Sesion </Text>
+        <Text style={styles.text}> Inica Sesión </Text>
         {emailValidate && <Text style={{ color: 'red', marginLeft: '8%' }}>El correo no es valido</Text>}
         <TextInput
           style={styles.textInput}
           placeholder="Email"
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.validate(text)}
           value={email}
@@ -82,7 +82,7 @@ class SignInView extends Component {
           type="password"
           secureTextEntry={true} 
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.setState({ password: text })}
           value={password}
@@ -90,7 +90,7 @@ class SignInView extends Component {
         <TouchableHighlight onPress={
           () => { if (!loading) this.submitForm() }
         } style={{ width: '90%', alignSelf: 'center', borderRadius: 12, }} >
-          <Text style={styles.button}> Iniciar Sesion </Text>
+          <Text style={styles.button}> Iniciar Sesión </Text>
         </TouchableHighlight>
 
       </View>
@@ -104,9 +104,10 @@ export default SignInView;
 const styles = StyleSheet.create({
   view: {
     padding: '2%',
+    marginTop: 100,
   },
   text: {
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: 'center',
     fontSize: 50
   },
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     paddingLeft: 6,
     marginBottom: 50,
     width: '90%',
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: "center",
   },
   button: {

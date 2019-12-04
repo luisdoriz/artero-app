@@ -6,7 +6,7 @@ import TouchableSquare from '../../components/core/TouchableSquare';
 
 class HomeView extends Component {
     logOut = async () => {
-        await AsyncStorage.setItem('tkn', 'false');
+        await AsyncStorage.setItem('tkn', undefined);
     }
     render() {
         const { navigation } = this.props;

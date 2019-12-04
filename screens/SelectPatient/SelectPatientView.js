@@ -93,7 +93,7 @@ class SelectPatientView extends Component {
 				style={styles.container}>
 				<TextInput
 					underlineColorAndroid={
-						'#0077B6'
+						'#333333'
 					}
 					style={styles.textInput}
 					placeholder="Nombre del paciente"
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 6,
 		marginBottom: 50,
 		width: '90%',
-		color: '#0077B6',
+		color: '#333333',
 		alignSelf: "center",
 	},
 	horizontal: {

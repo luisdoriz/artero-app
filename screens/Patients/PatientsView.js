@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, FlatList, TextInput, ScrollView, RefreshControl, Button, AsyncStorage } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, FlatList, TextInput, ScrollView, RefreshControl, Button, AsyncStorage, TouchableOpacity, Image } from 'react-native';
 
 import { fetchPatients, searchPatient } from '../../data/patients';
 import TouchableSquare from '../../components/core/TouchableSquare';
@@ -85,7 +85,7 @@ class PatientsView extends Component {
 	}
 
 	logOut = async () => {
-		await AsyncStorage.setItem('tkn', 'false');
+		await AsyncStorage.setItem('tkn', '');
 	}
 
 	onRefresh = () => {
@@ -106,25 +106,42 @@ class PatientsView extends Component {
 		const { patients, registerPatients, filter, loading } = this.state;
 		const { navigation } = this.props;
 		return (
-			<ScrollView
-				refreshControl={
-					<RefreshControl refreshing={loading} onRefresh={() => this.onRefresh()} />
-				}
-				style={styles.container}>
+			<View
+				>
 				<TextInput
 					underlineColorAndroid={
-						'#0077B6'
+						'#333333'
 					}
 					style={styles.textInput}
 					placeholder="Nombre del paciente"
 					onChangeText={(text) => this.searchPatientByName(text)}
 					value={filter}
 				/>
-				<Button title={'Agregar Paciente'} onPress={() => navigation.navigate('AddPatient')} style={{ borderColor: '#fff500', backgroundColor:'#333333', color: '#fff500' }} />
-
-				{loading ? <ActivityIndicator size="large" color="#0000ff" /> : this.renderPatients(patients)}
-				<Button title={'Cerrar sesion'} onPress={() => this.logOut()} style={{ borderColor: '#fff500', backgroundColor:'#333333', color: '#fff500' }} />
-			</ScrollView>
+				<View
+					style={{height:'90%'}}
+					
+					>
+				<ScrollView
+				refreshControl={
+					<RefreshControl refreshing={loading} onRefresh={() => this.onRefresh()} />
+				}
+					style={styles.container}>
+					{loading ? <ActivityIndicator size="large" color="#0000ff" /> : this.renderPatients(patients)}
+					<Button title={'Cerrar sesión'} onPress={() => this.logOut()} style={{ borderColor: '#fff500', backgroundColor: '#333333', color: '#fff500' }} />
+				</ScrollView>
+				</View>
+				<TouchableOpacity
+					activeOpacity={0.7}
+					onPress={() => navigation.navigate('AddPatient')}
+					style={styles.TouchableOpacityStyle}>
+					<Image
+						source={{
+							uri: 'https://icon-library.net/images/black-plus-icon/black-plus-icon-8.jpg',
+						}}
+						style={styles.FloatingButtonStyle}
+					/>
+				</TouchableOpacity>
+			</View>
 		)
 	}
 }
@@ -135,19 +152,40 @@ export default PatientsView;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff'
+		backgroundColor: '#fff',
+		height: '95%',
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0
 	},
 	textInput: {
 		height: 40,
 		paddingLeft: 6,
 		marginBottom: 50,
 		width: '90%',
-		color: '#0077B6',
+		color: '#333333',
 		alignSelf: "center",
 	},
 	horizontal: {
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		padding: 10
-	}
+	},
+	TouchableOpacityStyle: {
+		position: 'absolute',
+		width: 50,
+		height: 50,
+		alignItems: 'center',
+		justifyContent: 'center',
+		right: 30,
+		bottom: 50,
+	},
+
+	FloatingButtonStyle: {
+		resizeMode: 'contain',
+		width: 100,
+		height: 100,
+	},
 });

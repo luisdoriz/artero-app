@@ -118,7 +118,7 @@ class PatientView extends Component {
                                     marginBottom: 10,
                                     padding: 15,
                                     borderWidth: 1,
-                                    borderColor: '#0077B6'
+                                    borderColor: '#333333'
                                 }}>
                                     <Text style={styles.text}>Presión Sistólica   : {item.systolicPressure}</Text>
                                     <Text style={styles.text}>Presión Diastólica   : {item.diastolicPressure}</Text>
@@ -146,12 +146,12 @@ export default PatientView
 
 const styles = StyleSheet.create({
     header: {
-        color: '#0077B6',
+        color: '#333333',
         fontSize: 20,
         alignSelf: 'center',
     },
     text: {
-        color: '#0077B6',
+        color: '#333333',
         fontSize: 20,
     },
     container: {

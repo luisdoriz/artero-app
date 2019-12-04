@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   text: {
-    color: '#0077B6',
+    color: '#333333',
     fontSize: 25,
     marginTop: 5,
   },

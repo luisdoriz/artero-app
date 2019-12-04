@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
@@ -31,7 +31,7 @@ const RegisterNavigation = createStackNavigator({
 			title: 'Selección de paciente',
 			headerTitleStyle: {
 				width: WIDTH - 75,
-				color: '#038BD3'
+				color: '#333333'
 			},
 		}),
 	},
@@ -41,7 +41,7 @@ const RegisterNavigation = createStackNavigator({
 			title: 'Registro de Presión',
 			headerTitleStyle: {
 				width: WIDTH - 75,
-				color: '#038BD3'
+				color: '#333333'
 			},
 		}),
 	},
@@ -51,7 +51,7 @@ const RegisterNavigation = createStackNavigator({
 			title: 'Diagnositco',
 			headerTitleStyle: {
 				width: WIDTH - 75,
-				color: '#038BD3'
+				color: '#333333'
 			},
 		}),
 	}
@@ -66,7 +66,7 @@ const PatientsNavigation = createStackNavigator({
 			title: navigation.state.params.patient,
 			headerTitleStyle: {
 				width: WIDTH - 75,
-				color: '#038BD3'
+				color: '#333333'
 			},
 		}),
 	},
@@ -76,7 +76,7 @@ const PatientsNavigation = createStackNavigator({
 			title: `Condiciones de ${navigation.state.params.patient.handleName}`,
 			headerTitleStyle: {
 				width: WIDTH - 75,
-				color: '#038BD3'
+				color: '#333333'
 			},
 		}),
 	},
@@ -95,7 +95,7 @@ const PatientsNavigation = createStackNavigator({
 
 // const authStack = createStackNavigator({ SignIn: SignIn});
 
-const AppNavigation = createBottomTabNavigator({
+const AppNavigation = createMaterialBottomTabNavigator({
 	Register: {
 		screen: RegisterNavigation,
 		navigationOptions: {
@@ -115,11 +115,13 @@ const AppNavigation = createBottomTabNavigator({
 		}
 	},
 },
-// {
-// 	activeColor: '#333333',
-// 		inactiveColor: '#fff500',
-// 			barStyle: { backgroundColor: '#333333' },
-// }
+{
+	activeBackgroundColor: '#333333',
+	activeColor: '#fff500',
+			barStyle: {
+				backgroundColor: '#333333',
+		},
+}
 );
 
 export default createAppContainer(AppNavigation);

@@ -46,7 +46,10 @@ class RegisterView extends Component {
         patientId: id,
       };
       const token = await this.getToken();
+      console.log(token);
+
       const response = await postAppointment(token, data);
+      console.log(response);
       if (response) {
         navigation.navigate(
           'Diagnosis',
@@ -91,7 +94,7 @@ class RegisterView extends Component {
           placeholder="Presión Sistólica   "
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.setState({ systolicPressure: text })}
           value={systolicPressure}
@@ -102,7 +105,7 @@ class RegisterView extends Component {
           placeholder="Presión Diastólica   "
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.setState({ diastolicPressure: text })}
           value={diastolicPressure}
@@ -112,7 +115,7 @@ class RegisterView extends Component {
           placeholder="Peso (kg)"
           keyboardType={'numeric'}
           underlineColorAndroid={
-            '#0077B6'
+            '#333333'
           }
           onChangeText={text => this.setState({ wheight: text })}
           value={wheight}
@@ -133,7 +136,7 @@ export default RegisterView;
 
 const styles = StyleSheet.create({
   text: {
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: 'center',
     marginBottom: 50,
     fontSize: 50
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
     paddingLeft: 6,
     marginBottom: 50,
     width: '90%',
-    color: '#0077B6',
+    color: '#333333',
     alignSelf: "center",
   },
   button: {

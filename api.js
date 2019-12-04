@@ -38,6 +38,7 @@ const api = {
     post(token, data) {
       const url = `${host}/appointment`;
       postHeader.body = JSON.stringify(data);
+      console.log(token)
       postHeader.headers.authorization = token;
       return fetch(url, postHeader);
     },
