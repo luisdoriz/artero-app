@@ -44,7 +44,7 @@ class PatientConditionsView extends Component {
       );
     }
   }
-	getToken = async () => (await AsyncStorage.getItem('tkn'));
+  getToken = async () => (await AsyncStorage.getItem('tkn'));
 
   renderCheckBox = (disease) => (
     <View key={disease.name} style={styles.horizontal}>
@@ -102,7 +102,7 @@ class PatientConditionsView extends Component {
       },
       {
         name: 'venousInsufficiency',
-        label: 'Insuficencia Venosa'
+        label: 'Insuficiencia Venosa'
       },
       {
         name: 'cardioInsufficiency',
@@ -185,4 +185,5 @@ const styles = StyleSheet.create({
     height: 300,
   }
 });
+
 

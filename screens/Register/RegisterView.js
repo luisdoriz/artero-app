@@ -18,7 +18,6 @@ class RegisterView extends Component {
 
   getToken = async () => (await AsyncStorage.getItem('tkn'));
 
-
   submitAppointment = async () => {
     const { navigation } = this.props;
     const { id } = navigation.state.params;
@@ -59,7 +58,7 @@ class RegisterView extends Component {
         )
         Alert.alert(
           'Listo',
-          'Se registro con exito',
+          'Se registro con éxito',
           [
             {text: 'Entendido'},
           ],
@@ -68,7 +67,7 @@ class RegisterView extends Component {
       } else {
         Alert.alert(
           'Error',
-          'Ocurrio un error al querer guardar el registro',
+          'Ocurrió un error al querer guardar el registro',
           [
             { text: 'Entendido' },
           ],
@@ -91,7 +90,7 @@ class RegisterView extends Component {
         <Text style={styles.text}>Diagnóstico</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Presión Sistólica   "
+          placeholder="Presión Sistólica"
           keyboardType={'numeric'}
           underlineColorAndroid={
             '#333333'
@@ -102,7 +101,7 @@ class RegisterView extends Component {
 
         <TextInput
           style={styles.textInput}
-          placeholder="Presión Diastólica   "
+          placeholder="Presión Diastólica"
           keyboardType={'numeric'}
           underlineColorAndroid={
             '#333333'
@@ -132,7 +131,6 @@ class RegisterView extends Component {
 }
 
 export default RegisterView;
-
 
 const styles = StyleSheet.create({
   text: {
@@ -168,3 +166,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   }
 });
+
+

@@ -37,7 +37,6 @@ class AddPatientView extends Component {
     this.state = initialState;
   }
 
-
   submitPatient = async () => {
     const { navigation } = this.props;
     const {
@@ -136,7 +135,7 @@ class AddPatientView extends Component {
       this.setState({ [name]: value });
     }
   }
-	getToken = async () => (await AsyncStorage.getItem('tkn'));
+  getToken = async () => (await AsyncStorage.getItem('tkn'));
 
   renderCheckBox = (disease) => (
     <View key={disease.name} style={styles.horizontal}>
@@ -210,7 +209,7 @@ class AddPatientView extends Component {
       },
       {
         name: 'venousInsufficiency',
-        label: 'Insuficencia Venosa'
+        label: 'Insuficiencia Venosa'
       },
       {
         name: 'cardioInsufficiency',
@@ -344,7 +343,6 @@ class AddPatientView extends Component {
 
 export default AddPatientView;
 
-
 const styles = StyleSheet.create({
   view: {
     padding: '2%',
@@ -397,3 +395,5 @@ const styles = StyleSheet.create({
     height: 300,
   }
 });
+
+

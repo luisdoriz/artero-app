@@ -30,7 +30,7 @@ class PatientView extends Component {
         this.changeLoading();
     }
 
-	getToken = async () => (await AsyncStorage.getItem('tkn'));
+    getToken = async () => (await AsyncStorage.getItem('tkn'));
 
     fetchAppointments = async () => {
         const { id } = this.props.navigation.state.params;
@@ -80,7 +80,6 @@ class PatientView extends Component {
         }, 2000);
     };
 
-
     render() {
         const { patient, appointments, loading } = this.state;
 
@@ -123,9 +122,9 @@ class PatientView extends Component {
                                     <Text style={styles.text}>Presión Sistólica   : {item.systolicPressure}</Text>
                                     <Text style={styles.text}>Presión Diastólica   : {item.diastolicPressure}</Text>
                                     <Text style={styles.text}>Peso: {item.wheight}kg</Text>
-                                    <Text style={styles.text}>Indice de masa muscular: {item.icm}</Text>
+                                    <Text style={styles.text}>Índice de masa muscular: {item.icm}</Text>
                                     <Text style={styles.text}>Riesgo: {item.cr}%</Text>
-                                    <Text style={styles.text}>Hipertension: {item.hipertension}</Text>
+                                    <Text style={styles.text}>Hipertensión: {item.hipertension}</Text>
                                     {item.medicines.length ? (<Text style={styles.text}>Medicinas: {item.medicines.map(med => med.medicine.name)}</Text>) :
                                         (<Text style={styles.text}>Recomendaciones: Caminar 30 min diarios, no fumar, dieta dash</Text>)
                                     }
@@ -166,3 +165,5 @@ const styles = StyleSheet.create({
         padding: 10
     }
 });
+
+
